@@ -1,14 +1,14 @@
 package model;
 
 public abstract class Entity implements IEntity{
-    private int id;
+    private long id;
 
-    Entity(int id) {
+    Entity(long id) {
         this.id = id;
     }
 
     @Override
-    public int getId() {
+    public long getId() {
         return id;
     }
 }
