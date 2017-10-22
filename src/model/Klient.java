@@ -1,4 +1,4 @@
-package com.example.bank;
+package model;
 
 public class Klient extends BankClient {
 
@@ -6,11 +6,5 @@ public class Klient extends BankClient {
         this.id++;
         this.dane = dane;
         this.haslo = haslo;
-    }
-
-
-    @Override
-    public void setDane() {
-
     }
 }

@@ -1,4 +1,4 @@
-package com.example.bank;
+package model;
 
 
 public class DaneFirmy implements IDane{
