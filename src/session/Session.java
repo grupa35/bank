@@ -1,8 +1,17 @@
-package session
+package session;
+
+import encoder.StringEncoder;
+
+import java.security.MessageDigest;
 
 public class Session {
     private Repository repo;
     private Executor exec;
+    private BankClient user;
+
+    public Session() {
+        this.repo = new Repository();
+    }
 
     public Executor getExecutor() {
         return exec;
@@ -12,21 +21,33 @@ public class Session {
         return repo;
     }
 
-    public UserBankAccount getUserBankAccounts {
-        return repo.getUserBankAccountsById(id);
+    public List<UserBankAccount> getUserBankAccounts() {
+        return repo.getUserBankAccountsById(user.getId());
     }
 
-    public boolean login(int id, String pass) {
-        return this.checkValidity(id, pass))
+    public void login(int id, String pass) {
+        BankClient user = repo.getBankClientById(id);
+        if(this.checkValidity(user, pass))
+            initializeAfterLogin(user);
+        else
+            throw new IllegalArgumentException("Invalid password.");
     }
 
-    private boolean checkValidity(int id, String pass) {
-        BankUser bankUser = repo.getBankClientById(id);
-        if (bankuser == null) {
+    private boolean checkValidity(BankClient user, String pass) {
+        if (user == null) {
             throw new IllegalArgumentException("Invalid login.");
         } else {
-            return bankUser.getPassword.equals(pass);
+            pass = user.hashFunc(pass);
+            return user.getPassword.equals(pass);
         }
     }
 
+    private void initializeAfterLogin(BankClient user) {
+        this.user = user;
+        this.exec = new Executor(this.repo);
+    }
+
+    public BankClient getUser() {
+        return user;
+    }
 }
