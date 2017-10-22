@@ -83,86 +83,86 @@ public class Repository {
 	
 	
 	
-	public static void main(String[] args) 
-	{
-		PersonalData data0 = new PersonalData();
-		data0.setName("Piotr");
-		data0.setSurname("Jakiœ");
-		data0.setPesel(97537156310l);
+// 	public static void main(String[] args) 
+// 	{
+// 		PersonalData data0 = new PersonalData();
+// 		data0.setName("Piotr");
+// 		data0.setSurname("JakiÅ“");
+// 		data0.setPesel(97537156310l);
 		
-		CompanyData data1 = new CompanyData();
-		data1.setName("Ta Firma");
-		data1.setAddress("Jakaœ 20");
-		data1.setNIP(37592039746l);
+// 		CompanyData data1 = new CompanyData();
+// 		data1.setName("Ta Firma");
+// 		data1.setAddress("JakaÅ“ 20");
+// 		data1.setNIP(37592039746l);
 		
-		PersonalData data2 = new PersonalData();
-		data2.setName("Zbigniew");
-		data2.setSurname("Kot");
-		data2.setPesel(97537156310l);
+// 		PersonalData data2 = new PersonalData();
+// 		data2.setName("Zbigniew");
+// 		data2.setSurname("Kot");
+// 		data2.setPesel(97537156310l);
 		
-		PersonalData data3 = new PersonalData();
-		data3.setName("Zbigniew");
-		data3.setSurname("Him");
-		data3.setPesel(6392785492l);
+// 		PersonalData data3 = new PersonalData();
+// 		data3.setName("Zbigniew");
+// 		data3.setSurname("Him");
+// 		data3.setPesel(6392785492l);
 		
-		BankClient client0 = new Klient();
-		BankClient client1 = new Firma();
-		BankClient client2 = new Klient();
-		BankClient client3 = new Klient();
+// 		BankClient client0 = new Klient();
+// 		BankClient client1 = new Firma();
+// 		BankClient client2 = new Klient();
+// 		BankClient client3 = new Klient();
 		
-		client0.setData(data0);
-		client1.setData(data1);
-		client2.setData(data2);
-		client3.setData(data3);
+// 		client0.setData(data0);
+// 		client1.setData(data1);
+// 		client2.setData(data2);
+// 		client3.setData(data3);
 		
-		Account acc0 = new Account(client0);
-		acc0.setBalance(1000);
-		Account acc00 = new Account(client0);
-		acc00.setBalance(11000);
+// 		Account acc0 = new Account(client0);
+// 		acc0.setBalance(1000);
+// 		Account acc00 = new Account(client0);
+// 		acc00.setBalance(11000);
 		
-		Account acc1 = new Account(client1);
-		acc1.setBalance(20000);
+// 		Account acc1 = new Account(client1);
+// 		acc1.setBalance(20000);
 		
-		Account acc2 = new Account(client2);
-		acc1.setBalance(3000);
+// 		Account acc2 = new Account(client2);
+// 		acc1.setBalance(3000);
 		
-		Account acc3 = new Account(client3);
-		acc1.setBalance(4000);
+// 		Account acc3 = new Account(client3);
+// 		acc1.setBalance(4000);
 		
-		Withdraw oper0 = new Withdraw(acc0, 100);
-		Withdraw oper1 = new Transfer(acc1, acc0, 200);
-		Withdraw oper2 = new Withdraw(acc2, 300);
-		Withdraw oper3 = new Withdraw(acc3, 400);
+// 		Withdraw oper0 = new Withdraw(acc0, 100);
+// 		Withdraw oper1 = new Transfer(acc1, acc0, 200);
+// 		Withdraw oper2 = new Withdraw(acc2, 300);
+// 		Withdraw oper3 = new Withdraw(acc3, 400);
 		
-		Repository r = new Repository();
+// 		Repository r = new Repository();
 		
-		r.add(client0);
-		r.add(client1);
-		r.add(client2);
-		r.add(client3);
+// 		r.add(client0);
+// 		r.add(client1);
+// 		r.add(client2);
+// 		r.add(client3);
 		
-		r.add(acc0);
-		r.add(acc00);
-		r.add(acc1);
-		r.add(acc2);
-		r.add(acc3);
+// 		r.add(acc0);
+// 		r.add(acc00);
+// 		r.add(acc1);
+// 		r.add(acc2);
+// 		r.add(acc3);
 		
-		r.add(oper0);
-		r.add(oper1);
-		r.add(oper2);
-		r.add(oper3);
+// 		r.add(oper0);
+// 		r.add(oper1);
+// 		r.add(oper2);
+// 		r.add(oper3);
 		
-		System.out.println(client0.getData().dataContent());
-		System.out.println(r.findClient(client1.getID()).getData());
-		System.out.println(r.findOperation(oper1.getID()).getNrAccSource());
-		System.out.println(r.findOperation(oper1.getID()).getNrAccTarget());
-		System.out.println(r.findAccount(acc0.getID()).getClient().getData().toString());
-		System.out.println(acc0.getClient().getData());//.getData().toString());
-		System.out.println();
+// 		System.out.println(client0.getData().dataContent());
+// 		System.out.println(r.findClient(client1.getID()).getData());
+// 		System.out.println(r.findOperation(oper1.getID()).getNrAccSource());
+// 		System.out.println(r.findOperation(oper1.getID()).getNrAccTarget());
+// 		System.out.println(r.findAccount(acc0.getID()).getClient().getData().toString());
+// 		System.out.println(acc0.getClient().getData());//.getData().toString());
+// 		System.out.println();
 		
-		r.findAccount("Piotr").forEach( (a) -> System.out.println("A :" + a.getID()));
-		r.findClient("Zbigniew").forEach( (c) -> System.out.println("C :" + c.getData()));
-		r.findOperation("Zbigniew").forEach( (o) -> System.out.println("O :" + o.getID()));
-	}
+// 		r.findAccount("Piotr").forEach( (a) -> System.out.println("A :" + a.getID()));
+// 		r.findClient("Zbigniew").forEach( (c) -> System.out.println("C :" + c.getData()));
+// 		r.findOperation("Zbigniew").forEach( (o) -> System.out.println("O :" + o.getID()));
+// 	}
 
 }
