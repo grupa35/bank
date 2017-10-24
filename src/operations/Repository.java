@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class Repository {
-	private List<Withdraw> operationList;
+	private List<Operation> operationList;
 	private List<BankClient> clientList;
 	private List<Account> accountList;
 	
@@ -17,6 +17,7 @@ public class Repository {
 		accountList = new ArrayList<>(20);
 	}
 	
+	////////add
 	public void add(Withdraw element){
 		operationList.add(element);
 	}
@@ -30,39 +31,84 @@ public class Repository {
 	}
 	
 	
-	////////Find by key
-	public Withdraw findOperation(long key){
-		Optional<Withdraw> entity; 
+	////////add
+	public void addOperationList(List<Operation> list){
+		operationList.addAll(list);
+	}
+	
+	public void addClientList(List<BankClient> list){
+		clientList.addAll(list);
+	}
+	
+	public void addAccontList(List<Account> list){
+		accountList.addAll(list);
+	}
+	
+	
+	////////get
+	public Operation getOperation(long key){
+		Optional<Operation> entity; 
 		entity = operationList.stream()
-		        .filter(e -> e.getID() == key).findAny();
+		        .filter(e -> e.getId() == key).findAny();
 		if(entity.isPresent())
 			return entity.get();
 		return null;
 	}
 	
-	public BankClient findClient(long key){
+	public BankClient getClient(long key){
 		Optional<BankClient> entity; 
 		entity = clientList.stream()
-		        .filter(e -> e.getID() == key).findAny();
+		        .filter(e -> e.getId() == key).findAny();
 		if(entity.isPresent())
 			return entity.get();
 		return null;
 	}
 	
-	public Account findAccount(long key){
+	public Account getAccount(long key){
 		Optional<Account> entity; 
 		entity = accountList.stream()
-		        .filter(e -> e.getID() == key).findAny();
+		        .filter(e -> e.getId() == key).findAny();
 		if(entity.isPresent())
 			return entity.get();
 		return null;
 	}
 	
+	public Account getAccount(String bankNumber){
+		Optional<Account> entity; 
+		entity = accountList.stream()
+		        .filter(e -> e.getBankNumber().equals(bankNumber)).findAny();
+		if(entity.isPresent())
+			return entity.get();
+		return null;
+	}
+	
+	//////////get List
+	public List<Operation> getAllOperations(){
+		return operationList;
+	}
+	
+	public List<BankClient> getAllClients(){
+		return clientList;
+	}
+	
+	public List<Account> getAllAccounts(){
+		return accountList;
+	}
+	
+	
+	public List<Account> getClientAccounts(BankClient client){
+		List<Account> aList = new ArrayList<>(1);
+		accountList.stream()
+		        .filter(e -> e.getClient().equals(client)).forEach((g) -> aList.add(g));
+		return aList;
+	}
+	
+	
 	//////////find By Phrase
-	public List<Withdraw> findOperation(String phrase){
-		List<Withdraw> oList = new ArrayList<>(1);
+	public List<Operation> findOperation(String phrase){
+		List<Operation> oList = new ArrayList<>(1);
 		operationList.stream()
-		        .filter( e -> findAccount(e.getNrAccSource()).getClient().getData().dataContent().contains(phrase)).forEach((g) -> oList.add(g));
+		        .filter( e -> getAccount(e.getSourceAccountNumber()).getClient().getData().dataContent().contains(phrase)).forEach(f -> oList.add(f));
 		return oList;
 	}
 	
@@ -129,14 +175,39 @@ public class Repository {
 		Account acc3 = new Account(client3);
 		acc1.setBalance(4000);
 		
-		Withdraw oper0 = new Withdraw(acc0, 100);
-		Withdraw oper1 = new Transfer(acc1, acc0, 200);
-		Withdraw oper2 = new Withdraw(acc2, 300);
-		Withdraw oper3 = new Withdraw(acc3, 400);
+		Operation oper0 = new Withdraw(acc0, 100);
+		Operation oper1 = new Transfer(acc1, acc0, 200);
+		Operation oper2 = new Withdraw(acc2, 300);
+		Operation oper3 = new Withdraw(acc3, 400);
 		
 		Repository r = new Repository();
 		
-		r.add(client0);
+		List<BankClient> cL = new ArrayList<> (5);
+		List<Operation> wL = new ArrayList<> (5);
+		List<Account> aL = new ArrayList<> (5);
+		
+		cL.add(client0);
+		cL.add(client1);
+		cL.add(client2);
+		cL.add(client3);
+		
+		aL.add(acc0);
+		aL.add(acc00);
+		aL.add(acc1);
+		aL.add(acc2);
+		aL.add(acc3);
+		
+		wL.add(oper0);
+		wL.add(oper1);
+		wL.add(oper2);
+		wL.add(oper3);
+		
+		r.addClientList(cL);
+		r.addAccontList(aL);
+		r.addOperationList(wL);
+		
+		
+		/*r.add(client0);
 		r.add(client1);
 		r.add(client2);
 		r.add(client3);
@@ -150,19 +221,24 @@ public class Repository {
 		r.add(oper0);
 		r.add(oper1);
 		r.add(oper2);
-		r.add(oper3);
-		
+		r.add(oper3);*/
+		r.getClientAccounts(client0).forEach(a -> System.out.println("Accounts:" + a.getId() ));
+		System.out.println();
+		r.getAllClients().forEach(a -> System.out.println("Clients:" + a.getData() ));
 		System.out.println(client0.getData().dataContent());
-		System.out.println(r.findClient(client1.getID()).getData());
-		System.out.println(r.findOperation(oper1.getID()).getNrAccSource());
-		System.out.println(r.findOperation(oper1.getID()).getNrAccTarget());
-		System.out.println(r.findAccount(acc0.getID()).getClient().getData().toString());
+		System.out.println(r.getClient(client1.getId()).getData());
+		System.out.println(r.getOperation(oper1.getId()).getSourceAccountNumber());
+		System.out.println(r.getOperation(oper2.getId()).getSourceAccountNumber());
+		System.out.println(r.getAccount(acc0.getId()).getClient().getData().toString());
 		System.out.println(acc0.getClient().getData());//.getData().toString());
 		System.out.println();
+	
+		System.out.println(r.getOperation(oper1.getId()).getSourceAccountNumber());
+		System.out.println(r.getOperation(oper1.getId()).getSourceAccountNumber());
 		
-		r.findAccount("Piotr").forEach( (a) -> System.out.println("A :" + a.getID()));
+		r.findAccount("Piotr").forEach( (a) -> System.out.println("A :" + a.getId()));
 		r.findClient("Zbigniew").forEach( (c) -> System.out.println("C :" + c.getData()));
-		r.findOperation("Zbigniew").forEach( (o) -> System.out.println("O :" + o.getID()));
+		r.findOperation("Zbigniew").forEach( (o) -> System.out.println("O :" + o.getId()));
 	}
 
 }
