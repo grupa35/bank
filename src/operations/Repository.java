@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Repository {
@@ -46,40 +47,20 @@ public class Repository {
 	
 	
 	////////get
-	public Operation getOperation(long key){
-		Optional<Operation> entity; 
-		entity = operationList.stream()
-		        .filter(e -> e.getId() == key).findAny();
-		if(entity.isPresent())
-			return entity.get();
-		return null;
+	public Operation getOperation(long key){ 
+		return operationList.stream().filter(e -> e.getId() == key).findAny().orElse(null);	
 	}
 	
-	public BankClient getClient(long key){
-		Optional<BankClient> entity; 
-		entity = clientList.stream()
-		        .filter(e -> e.getId() == key).findAny();
-		if(entity.isPresent())
-			return entity.get();
-		return null;
+	public BankClient getClient(long key){ 
+		return clientList.stream().filter(e -> e.getId() == key).findAny().orElse(null);
 	}
 	
 	public Account getAccount(long key){
-		Optional<Account> entity; 
-		entity = accountList.stream()
-		        .filter(e -> e.getId() == key).findAny();
-		if(entity.isPresent())
-			return entity.get();
-		return null;
+		return accountList.stream().filter(e -> e.getId() == key).findAny().orElse(null);
 	}
 	
 	public Account getAccount(String bankNumber){
-		Optional<Account> entity; 
-		entity = accountList.stream()
-		        .filter(e -> e.getBankNumber().equals(bankNumber)).findAny();
-		if(entity.isPresent())
-			return entity.get();
-		return null;
+		return accountList.stream().filter(e -> e.getBankNumber().equals(bankNumber)).findAny().orElse(null);
 	}
 	
 	//////////get List
@@ -97,33 +78,21 @@ public class Repository {
 	
 	
 	public List<Account> getClientAccounts(BankClient client){
-		List<Account> aList = new ArrayList<>(1);
-		accountList.stream()
-		        .filter(e -> e.getClient().equals(client)).forEach((g) -> aList.add(g));
-		return aList;
+		return accountList.stream().filter(e -> e.getClient().equals(client)).collect(Collectors.toList()); // forEach((g) -> aList.add(g));
 	}
 	
 	
 	//////////find By Phrase
-	public List<Operation> findOperation(String phrase){
-		List<Operation> oList = new ArrayList<>(1);
-		operationList.stream()
-		        .filter( e -> getAccount(e.getSourceAccountNumber()).getClient().getData().dataContent().contains(phrase)).forEach(f -> oList.add(f));
-		return oList;
+	public List<Operation> findOperations(String phrase){
+		return operationList.stream().filter( e -> getAccount(e.getSourceAccountNumber()).getClient().getData().dataContent().contains(phrase)).collect(Collectors.toList());
 	}
 	
-	public List<Account> findAccount(String phrase){
-		List<Account> aList = new ArrayList<>(1);
-		accountList.stream()
-		        .filter(e -> e.getClient().getData().dataContent().contains(phrase)).forEach((g) -> aList.add(g));
-		return aList;
+	public List<Account> findAccounts(String phrase){
+		return accountList.stream().filter(e -> e.getClient().getData().dataContent().contains(phrase)).collect(Collectors.toList());
 	}
 	
-	public List<BankClient> findClient(String phrase){
-		List<BankClient> cList = new ArrayList<>(1);
-		clientList.stream()
-		        .filter(e -> e.getData().dataContent().contains(phrase)).forEach((g) -> cList.add(g));
-		return cList;
+	public List<BankClient> findClients(String phrase){
+		return clientList.stream().filter(e -> e.getData().dataContent().contains(phrase)).collect(Collectors.toList());
 	}
 	
 	
@@ -236,9 +205,9 @@ public class Repository {
 		System.out.println(r.getOperation(oper1.getId()).getSourceAccountNumber());
 		System.out.println(r.getOperation(oper1.getId()).getSourceAccountNumber());
 		
-		r.findAccount("Piotr").forEach( (a) -> System.out.println("A :" + a.getId()));
-		r.findClient("Zbigniew").forEach( (c) -> System.out.println("C :" + c.getData()));
-		r.findOperation("Zbigniew").forEach( (o) -> System.out.println("O :" + o.getId()));
+		r.findAccounts("Piotr").forEach( (a) -> System.out.println("A :" + a.getId()));
+		r.findClients("Zbigniew").forEach( (c) -> System.out.println("C :" + c.getData()));
+		r.findOperations("Zbigniew").forEach( (o) -> System.out.println("O :" + o.getId()));
 	}
 
 }
