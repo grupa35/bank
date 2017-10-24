@@ -1,19 +1,20 @@
 package repository;
 
+import java.util.Date;
 
-public class Transfer extends Withdraw {
-	long nrAccTarget;
+public class Transfer extends Operation {
+	String targetAccount;
 	
 	Transfer(Account source, Account target, double amount){
-		super(source, amount);
-		this.nrAccTarget = target.getNrAccount();	
+		sourceAccount = source.getBankNumber();
+		this.amount = amount;
+		date = new Date();
+		targetAccount = target.getBankNumber();	
 	}
 	
-	@Override
-	public long getNrAccTarget() {
-		return nrAccTarget;
+	public String getTargetAccountNumber() {
+		return targetAccount;
 	}
-
 	
 }
 
