@@ -1,8 +1,6 @@
 package session;
 
-import encoder.StringEncoder;
-
-import java.security.MessageDigest;
+import operation.Repository;
 
 public class Session {
     private Repository repo;
@@ -21,12 +19,12 @@ public class Session {
         return repo;
     }
 
-    public List<UserBankAccount> getUserBankAccounts() {
-        return repo.getUserBankAccountsById(user.getId());
+    public List<BankAccount> getUserBankAccounts() {
+        return repo.getClientAccounts(user);
     }
 
     public void login(int id, String pass) {
-        BankClient user = repo.getBankClientById(id);
+        BankClient user = repo.getClient(id);
         if(this.checkValidity(user, pass))
             initializeAfterLogin(user);
         else
