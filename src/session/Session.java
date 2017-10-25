@@ -6,6 +6,7 @@ import model.BankClient;
 import operation.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Session {
     private Repository repo;
@@ -14,6 +15,10 @@ public class Session {
 
     public Session() {
         this.repo = new Repository();
+    }
+
+    public Session(Repository repository) {
+        this.repo = repository;
     }
 
     public Executor getExecutor() {
@@ -28,12 +33,14 @@ public class Session {
         return repo.getClientAccounts(user);
     }
 
-    public void login(int id, String pass) {
-        BankClient user = repo.getClient(id);
-        if(this.checkValidity(user, pass))
+    public void login(String login, String pass) {
+        BankClient user = repo.getClientByLogin(login);
+
+        if (checkValidity(user, pass)) {
             initializeAfterLogin(user);
-        else
+        } else {
             throw new IllegalArgumentException("Invalid password.");
+        }
     }
 
     private boolean checkValidity(BankClient user, String pass) {

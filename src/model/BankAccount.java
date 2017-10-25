@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Random;
+
 public class BankAccount extends Entity {
     static int bankAccountCounter = 0;
 
@@ -31,6 +33,8 @@ public class BankAccount extends Entity {
     }
 
     private String generateAccountNumber() {
-        return "11222233334444555566667777";
+        Random generator = new Random();
+
+        return "1122223333444455556666" + generator.nextInt() % 1000;
     }
 }
