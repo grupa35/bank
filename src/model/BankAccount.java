@@ -35,6 +35,6 @@ public class BankAccount extends Entity {
     private String generateAccountNumber() {
         Random generator = new Random();
 
-        return "1122223333444455556666" + generator.nextInt() % 1000;
+        return "1122223333444455556666" + (Math.abs(generator.nextInt()) % 9899 + 1000);
     }
 }
