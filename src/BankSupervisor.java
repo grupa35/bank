@@ -77,14 +77,14 @@ public class BankSupervisor {
         Optional.ofNullable(session.getExecutor()).ifPresent(exe -> {
 
             BankAccount acc = session.getUserBankAccounts().get(0);
-            System.out.println(acc.getBalance());
+            System.out.println("Saldo mojego konta: " + acc.getBalance() + " zł");
             BankAccount accOther = session.getRepository().getAccount(0);   // numer wcześniej powinien być znany
 
             exe.makeWithdraw(acc.getBankAccountNumber(), 100);
-            System.out.println(acc.getBalance());
+            System.out.println("Saldo mojego konta: " + acc.getBalance() + " zł");
 
             exe.makeTransfer(acc.getBankAccountNumber(), accOther.getBankAccountNumber(), "pierwszy przelew", 255);
-            System.out.println(acc.getBalance());
+            System.out.println("Saldo mojego konta: " + acc.getBalance() + " zł");
             exe.printLog();
         });
     }
