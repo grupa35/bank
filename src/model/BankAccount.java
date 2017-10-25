@@ -4,11 +4,14 @@ public class BankAccount extends Entity {
     static int bankAccountCounter = 0;
 
     private String bankAccountNumber;
-    private double balance;
     private BankClient client;
+    private double balance;
 
-    public BankAccount() {
+    public BankAccount(BankClient client) {
         super(bankAccountCounter++);
+        this.bankAccountNumber = generateAccountNumber();
+        this.client = client;
+        balance = 0.0;
     }
 
     public String getBankAccountNumber() {
@@ -23,8 +26,8 @@ public class BankAccount extends Entity {
         return client;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void addAmount(double amount) {
+        balance += amount;
     }
 
     private String generateAccountNumber() {

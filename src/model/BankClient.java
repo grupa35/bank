@@ -16,7 +16,7 @@ public class BankClient extends Entity {
     }
 
     public BankClient(IData data) {
-        super(bankClientCounter);
+        super(bankClientCounter++);
         this.data = data;
     }
 
@@ -28,12 +28,9 @@ public class BankClient extends Entity {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
-        this.password = password;
+
+        this.password = hashPassword(password);
     }
 
     public IData getData() {
