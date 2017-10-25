@@ -1,18 +1,18 @@
 package operation;
 
+import model.BankAccount;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Repository {
-	private List<Operation> operationList;
-	private List<BankClient> clientList;
-	private List<BankAccount> accountList;
+	private List<Operation> operationList = new ArrayList<>();
+	private List<BankClient> clientList = new ArrayList<>();
+	private List<BankAccount> accountList = new ArrayList<>();
 	
 	public Repository(){
-		operationList = new ArrayList<>();
-		clientList = new ArrayList<>();
-		accountList = new ArrayList<>();
+
 	}
 
 	public void add(Withdraw element){
@@ -46,16 +46,16 @@ public class Repository {
 				.orElse(null);
 	}
 	
-	public BankClient getClient(long key){ 
+	public BankClient getClient(long id){
 		return clientList.stream()
-				.filter(e -> e.getId() == key)
+				.filter(e -> e.getId() == id)
 				.findAny()
 				.orElse(null);
 	}
 	
-	public BankAccount getAccount(long key){
+	public BankAccount getAccount(long id){
 		return accountList.stream()
-				.filter(e -> e.getId() == key)
+				.filter(e -> e.getId() == id)
 				.findAny()
 				.orElse(null);
 	}
