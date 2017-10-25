@@ -110,6 +110,13 @@ public class Repository {
 				.collect(Collectors.toList());
 	}
 
+	public BankClient getClientByLogin(String login) {
+		return clientList.stream()
+				.filter(client -> client.getLogin()
+						.equals(login)).findFirst()
+				.orElse(null);
+	}
+
 
 //	public static void main(String[] args)
 //	{

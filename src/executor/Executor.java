@@ -6,6 +6,8 @@ import operation.Repository;
 import operation.Transfer;
 import operation.Withdraw;
 
+import javax.rmi.CORBA.Util;
+import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class Executor {
     private Repository repository;
 
     List<String> log = new ArrayList<>();
+    private List<BankAccount> userBankAccounts;
 
     public Executor(Repository repository) {
 
@@ -23,6 +26,7 @@ public class Executor {
         BankAccount bankAccount = repository.getAccount(sourceBankAccountNumber);
         if(bankAccount != null) {
             Transfer transfer = new Transfer(sourceBankAccountNumber, targetBankAccountNumber, title, amount);
+            bankAccount.addAmount(-Math.abs(transfer.getAmount()));
             repository.add(transfer);
             log.add(transfer.getDescription());
             return true;
@@ -34,9 +38,10 @@ public class Executor {
     public boolean makeWithdraw(String sourceBankAccountNumber, double amount) {
         BankAccount bankAccount = repository.getAccount(sourceBankAccountNumber);
         if(bankAccount != null) {
-            Withdraw transfer = new Withdraw(sourceBankAccountNumber, amount);
-            repository.add(transfer);
-            log.add(transfer.getDescription());
+            Withdraw withdraw = new Withdraw(sourceBankAccountNumber, amount);
+            bankAccount.addAmount(-Math.abs(withdraw.getAmount()));
+            repository.add(withdraw);
+            log.add(withdraw.getDescription());
             return true;
         }
 

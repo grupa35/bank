@@ -25,12 +25,13 @@ public class Transfer extends Operation {
 	public String getDescription() {
 		StringBuilder builder = new StringBuilder();
 
-		builder	.append("id: " + getId())
+		builder	.append("przelew, ")
+				.append("id: " + getId() + ", ")
 				.append("tytuł: " + getTitle() + ", ")
 				.append("z rachunku: " + getSourceAccountNumber() + ", ")
 				.append("na rachunek: " + getTargetAccountNumber() + ", ")
 				.append("dnia: " + getDate() + ", ")
-				.append("na kwote: " + getAmount() + ", ");
+				.append("na kwote: " + getAmount() + " zł, ");
 
 		return builder.toString();
 	}
