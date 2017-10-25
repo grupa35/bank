@@ -2,5 +2,5 @@ package model;
 
 public interface IData {
 
-    public String dataContent();
+    String dataContent();
 }
