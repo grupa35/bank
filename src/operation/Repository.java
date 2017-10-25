@@ -1,6 +1,7 @@
 package operation;
 
 import model.BankAccount;
+import model.BankClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class Repository {
 	
 	public BankAccount getAccount(String bankNumber){
 		return accountList.stream()
-				.filter(e -> e.getBankNumber().equals(bankNumber))
+				.filter(e -> e.getBankAccountNumber().equals(bankNumber))
 				.findAny()
 				.orElse(null);
 	}
