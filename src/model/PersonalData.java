@@ -50,4 +50,9 @@ public class PersonalData implements IData {
 
         return stringBuilder.toString();
     }
+
+    @Override
+    public String dataContent() {
+        return toString();
+    }
 }

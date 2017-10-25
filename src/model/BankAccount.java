@@ -1,24 +1,33 @@
 package model;
 
 public class BankAccount extends Entity {
+    static int bankAccountCounter = 0;
 
-    private long nrB;
-    private long accountBalance;
+    private String bankAccountNumber;
+    private double balance;
     private BankClient client;
 
-    public long getNrB() {
-        return nrB;
+    public BankAccount() {
+        super(bankAccountCounter++);
     }
 
-    public long getAccountBalance() {
-        return accountBalance;
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public double getBalance() {
+        return balance;
     }
 
     public BankClient getClient() {
         return client;
     }
 
-    public void setAccountBalance(long accountBalance) {
-        this.accountBalance = accountBalance;
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    private String generateAccountNumber() {
+        return "11222233334444555566667777";
     }
 }
