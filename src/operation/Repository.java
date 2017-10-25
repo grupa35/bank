@@ -16,14 +16,18 @@ public class Repository {
 
 	}
 
+	public void add(Transfer transfer) {
+		operationList.add(transfer);
+	}
+
 	public void add(Withdraw element){
 		operationList.add(element);
 	}
-	
+
 	public void add(BankClient element){
 		clientList.add(element);
 	}
-	
+
 	public void add(BankAccount element){
 		accountList.add(element);
 	}
@@ -31,36 +35,36 @@ public class Repository {
 	public void addOperationList(List<Operation> list){
 		operationList.addAll(list);
 	}
-	
+
 	public void addClientList(List<BankClient> list){
 		clientList.addAll(list);
 	}
-	
+
 	public void addAccountList(List<BankAccount> list){
 		accountList.addAll(list);
 	}
 
-	public Operation getOperation(long key){ 
+	public Operation getOperation(long key){
 		return operationList.stream()
 				.filter(e -> e.getId() == key)
 				.findAny()
 				.orElse(null);
 	}
-	
+
 	public BankClient getClient(long id){
 		return clientList.stream()
 				.filter(e -> e.getId() == id)
 				.findAny()
 				.orElse(null);
 	}
-	
+
 	public BankAccount getAccount(long id){
 		return accountList.stream()
 				.filter(e -> e.getId() == id)
 				.findAny()
 				.orElse(null);
 	}
-	
+
 	public BankAccount getAccount(String bankNumber){
 		return accountList.stream()
 				.filter(e -> e.getBankAccountNumber().equals(bankNumber))
@@ -71,44 +75,42 @@ public class Repository {
 	public List<Operation> getAllOperations(){
 		return operationList;
 	}
-	
+
 	public List<BankClient> getAllClients(){
 		return clientList;
 	}
-	
+
 	public List<BankAccount> getAllAccounts(){
 		return accountList;
 	}
-	
-	
+
+
 	public List<BankAccount> getClientAccounts(BankClient client){
 		return accountList.stream()
 				.filter(e -> e.getClient().equals(client))
 				.collect(Collectors.toList());
 	}
-	
+
 	public List<Operation> findOperations(String phrase){
 		return operationList.stream()
 				.filter( e -> getAccount(e.getSourceAccountNumber())
 				.getClient().getData().dataContent().contains(phrase))
 				.collect(Collectors.toList());
 	}
-	
+
 	public List<BankAccount> findAccounts(String phrase){
 		return accountList.stream()
 				.filter(e -> e.getClient().getData().dataContent().contains(phrase))
 				.collect(Collectors.toList());
 	}
-	
+
 	public List<BankClient> findClients(String phrase){
 		return clientList.stream()
 				.filter(e -> e.getData().dataContent().contains(phrase))
 				.collect(Collectors.toList());
 	}
-	
-	
-	
-	
+
+
 //	public static void main(String[] args)
 //	{
 //		PersonalData data0 = new PersonalData();

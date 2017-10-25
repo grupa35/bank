@@ -1,6 +1,11 @@
 package session;
 
+import executor.Executor;
+import model.BankAccount;
+import model.BankClient;
 import operation.Repository;
+
+import java.util.List;
 
 public class Session {
     private Repository repo;
@@ -35,8 +40,7 @@ public class Session {
         if (user == null) {
             throw new IllegalArgumentException("Invalid login.");
         } else {
-            pass = user.hashFunc(pass);
-            return user.getPassword.equals(pass);
+            return user.equalsPassword(pass);
         }
     }
 

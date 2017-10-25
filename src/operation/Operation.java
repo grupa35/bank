@@ -1,5 +1,6 @@
 package operation;
 
+import model.BankAccount;
 import model.Entity;
 
 import java.util.Date;
@@ -11,9 +12,9 @@ public abstract class Operation extends Entity {
 
     protected static long nextId = 0;
 
-    Operation(BankAccount source, double amount) {
+    Operation(String source, double amount) {
         super(nextId++);
-        sourceAccountNumber = source.getBankAccountNumber();
+        sourceAccountNumber = source;
         this.amount = amount;
         date = new Date();
     }
@@ -29,4 +30,6 @@ public abstract class Operation extends Entity {
     public String getSourceAccountNumber() {
         return sourceAccountNumber;
     }
+
+    public abstract String getDescription();
 }
